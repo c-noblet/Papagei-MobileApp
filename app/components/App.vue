@@ -12,10 +12,10 @@
         android.position="popup"
       />
       <ActionItem 
-        @tap="reload"
+        @tap="getSounds"
         ios.systemIcon="16" 
         ios.position="right"
-        text="Reload" 
+        text="Reload sounds" 
         android.position="popup"
       />
     </ActionBar>
@@ -34,7 +34,7 @@
 import axios from 'axios';
 export default {
   mounted() {
-    this.reload();
+    this.getSounds();
   },
   data() {
     return {
@@ -43,15 +43,12 @@ export default {
     }
   },
   methods: {
-    async reload() {
+    async getSounds() {
       try {
         const response = await axios.get(this.host);
         this.sounds = await response.data;
       } catch (err) {
-        alert(err)
-        .then(() => {
-          console.log(err);
-        });
+        alert(await err.message);
       }
     },
     async addSound() {
@@ -79,9 +76,11 @@ export default {
           };
           try {
             const response = await axios.post(this.host, formData);
-            alert(response.data.message);
+            alert(await response.data).then(()=>{
+              this.getSounds();
+            });
           } catch (err) {
-            alert(err);
+            alert(await err.message);
           }
         }
       }
@@ -89,9 +88,9 @@ export default {
     async onTap (id) {
       try {
         const response = await axios.get(this.host+id);
-        alert(response.data.title);
+        alert(await response.data.title);
       } catch (err) {
-        alert(err);
+        alert(`Could not play the sound because of: ${ await err.message}`);
       };
     },
     async onDelete (id) {
@@ -99,12 +98,11 @@ export default {
       if(deletePrompt){
         try {
           const response = await axios.delete(this.host+id);
-          alert(await response.data.message);
-        } catch (err) {
-          alert(err)
-          .then(() => {
-            alert(err);
+          alert(await response.data.message).then(() => {
+            this.getSounds();
           });
+        } catch (err) {
+          alert(await err.message);
         }
       }
     }
