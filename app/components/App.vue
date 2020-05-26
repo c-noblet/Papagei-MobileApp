@@ -29,7 +29,8 @@
     <ListView for="sound in sounds">
       <v-template>
         <GridLayout columns="*, auto" rows="auto, auto">
-          <Label :text="sound.title" row="0" col="0" @tap="onTap(sound._id)"/>
+          <Image :src="sound.pic" row="0" col="0" stretch="fill" @tap="onTap(sound._id)" />
+          <!--<Label :text="sound.title" row="0" col="0" @tap="onTap(sound._id)"/>-->
           <Button text="Supprimer" row="0" col="1" @tap="onDelete(sound._id)"/>
         </GridLayout>
       </v-template>
@@ -45,7 +46,7 @@ export default {
   },
   data() {
     return {
-      host: "http://192.168.1.24:8000/sounds/",
+      host: "http://192.168.1.94:8000/sounds/",
       sounds: []
     }
   },
