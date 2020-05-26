@@ -1,4 +1,4 @@
-# NativeScript-Vue Application
+# Papagei
 
 > A native application built with NativeScript-Vue
 
