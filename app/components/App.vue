@@ -18,6 +18,13 @@
         text="Reload sounds" 
         android.position="popup"
       />
+      <ActionItem 
+        @tap="setServer"
+        ios.systemIcon="16" 
+        ios.position="right"
+        text="Set server IP" 
+        android.position="popup"
+      />
     </ActionBar>
     <ListView for="sound in sounds">
       <v-template>
@@ -38,11 +45,23 @@ export default {
   },
   data() {
     return {
-      host: "http://192.168.1.94:8000/sounds/",
+      host: "http://192.168.1.24:8000/sounds/",
       sounds: []
     }
   },
   methods: {
+    async setServer() {
+      const hostPrompt = await prompt({
+        title: "Adresse IP",
+        message: "Insérer l'adresse IP ci-dessous",
+        cancelButtonText: "Annuler  ",
+        okButtonText: "  Ajouter"
+      });
+      if(hostPrompt.text.trim() !== '' && hostPrompt.result){
+        this.host = `http://${hostPrompt.text}:8000/sounds/`;
+      }
+      alert(`Server set to : ${this.host}`);
+    },
     async getSounds() {
       try {
         const response = await axios.get(this.host);
@@ -90,7 +109,7 @@ export default {
         const response = await axios.get(this.host+id);
         alert(await response.data.title);
       } catch (err) {
-        alert(`Could not play the sound because of: ${ await err.message}`);
+        alert(`Could not play the sound because of : ${ await err.message}`);
       };
     },
     async onDelete (id) {
