@@ -26,20 +26,26 @@
         android.position="popup"
       />
     </ActionBar>
-    <ListView for="sound in sounds">
-      <v-template>
-        <GridLayout columns="*, auto" rows="auto, auto">
-          <Image :src="sound.pic" row="0" col="0" stretch="fill" @tap="onTap(sound._id)" />
-          <!--<Label :text="sound.title" row="0" col="0" @tap="onTap(sound._id)"/>-->
-          <Button text="Supprimer" row="0" col="1" @tap="onDelete(sound._id)"/>
-        </GridLayout>
-      </v-template>
-    </ListView>
+    <StackLayout>
+      <ListView for="sound in sounds">
+        <v-template>
+          <GridLayout columns="*, auto" rows="auto, auto">
+            <Image :src="sound.pic" row="0" col="0" stretch="fill" @tap="onPlay(sound._id)" />
+            <!--<Label :text="sound.title" row="0" col="0" @tap="onPlay(sound._id)"/>-->
+            <Button text="Supprimer" row="0" col="1" @tap="onDelete(sound._id)"/>
+          </GridLayout>
+        </v-template>
+      </ListView>
+    </StackLayout>
   </Page>
 </template>
 
 <script>
 import axios from 'axios';
+import { Feedback, FeedbackPosition } from 'nativescript-feedback';
+
+const toast = new Feedback();
+
 export default {
   mounted() {
     this.getSounds();
@@ -105,15 +111,18 @@ export default {
         }
       }
     },
-    async onTap (id) {
+    async onPlay(id) {
       try {
         const response = await axios.get(this.host+id);
-        alert(await response.data.title);
+        toast.show({
+          message: "test"
+          //message: `Playing sound : ${ await response.data.title}`
+        });
       } catch (err) {
         alert(`Could not play the sound because of : ${ await err.message}`);
       };
     },
-    async onDelete (id) {
+    async onDelete(id) {
       const deletePrompt = await confirm('Voulez vous supprimez le son ?');
       if(deletePrompt){
         try {
