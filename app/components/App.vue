@@ -18,22 +18,11 @@
         text="Reload sounds" 
         android.position="popup"
       />
-      <ActionItem 
-        @tap="setServer"
-        ios.systemIcon="16" 
-        ios.position="right"
-        text="Set server IP" 
-        android.position="popup"
-      />
     </ActionBar>
     <StackLayout>
-      <ListView for="sound in sounds">
+      <ListView for="sound in $store.state.data">
         <v-template>
-          <GridLayout columns="*, auto" rows="auto, auto">
-            <Image :src="sound.pic" row="0" col="0" stretch="fill" @tap="onPlay(sound._id)" />
-            <!--<Label :text="sound.title" row="0" col="0" @tap="onPlay(sound._id)"/>-->
-            <Button text="Supprimer" row="0" col="1" @tap="onDelete(sound._id)"/>
-          </GridLayout>
+          <Sound :sound="sound" />
         </v-template>
       </ListView>
     </StackLayout>
@@ -41,6 +30,7 @@
 </template>
 
 <script>
+import Sound from './Sound';
 import axios from 'axios';
 import { Feedback, FeedbackPosition } from 'nativescript-feedback';
 
@@ -57,18 +47,6 @@ export default {
     }
   },
   methods: {
-    async setServer() {
-      const hostPrompt = await prompt({
-        title: "Adresse IP",
-        message: "Insérer l'adresse IP ci-dessous",
-        cancelButtonText: "Annuler  ",
-        okButtonText: "  Ajouter"
-      });
-      if(hostPrompt.text.trim() !== '' && hostPrompt.result){
-        this.host = `http://${hostPrompt.text}:8000/sounds/`;
-      }
-      alert(`Server set to : ${this.host}`);
-    },
     async getSounds() {
       try {
         const response = await axios.get(this.host);
@@ -135,6 +113,9 @@ export default {
         }
       }
     }
+  },
+  components: {
+    Sound
   }
 }
 </script>
