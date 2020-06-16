@@ -14,7 +14,7 @@
         @tap="newSettings()"
         ios.systemIcon="16" 
         ios.position="right"
-        text="Changer de channel"
+        text="Changer le channel"
         android.position="popup"
       />
     </ActionBar>
@@ -57,7 +57,7 @@ export default {
     async connectBot() {
       try {
         await this.getSettings();
-				const response = await axios.get(`https://enigmatic-headland-37663.herokuapp.com/connect/${this.channel}`);
+				const response = await axios.get(`http://url/connect/${this.channel}`);
 				const toast = Toast.makeText("Connexion");
 				toast.show();
 			} catch (err) {
@@ -89,7 +89,7 @@ export default {
 </script>
 <style scoped>
   ActionBar {
-    background-color: #27ae60;
+    background-color: #e74c3c;
     color: #ffffff;
   }
 </style>
