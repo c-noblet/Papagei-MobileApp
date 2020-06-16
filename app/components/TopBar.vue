@@ -57,7 +57,7 @@ export default {
     async connectBot() {
       try {
         await this.getSettings();
-				const response = await axios.get(`http://192.168.1.94:8000/connect/${this.channel}`);
+				const response = await axios.get(`https://enigmatic-headland-37663.herokuapp.com/connect/${this.channel}`);
 				const toast = Toast.makeText("Connexion");
 				toast.show();
 			} catch (err) {

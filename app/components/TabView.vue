@@ -114,7 +114,7 @@ export default {
 	methods: {
     async onPlay(ytId) {
 			try {
-				const response = await axios.get('http://192.168.1.94:8000/sounds/'+ytId);
+				const response = await axios.get(`https://enigmatic-headland-37663.herokuapp.com/sounds/${ytId}`);
 				const toast = Toast.makeText("Lecture");
 				toast.show();
 			} catch (err) {
