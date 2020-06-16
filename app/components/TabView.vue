@@ -1,7 +1,7 @@
 <template>
   <TabView 
 			@selectedIndexChange="getSounds()"
-			android:tabBackgroundColor="#53ba82"
+			android:tabBackgroundColor="#e74c3c"
 			android:tabTextColor="#c4ffdf"
 			android:selectedTabTextColor="#ffffff"
 			androidSelectedTabHighlightColor="#ffffff">
@@ -11,9 +11,9 @@
 			<TabViewItem title="Tous">
 				<ListView for="sound in sounds">
 					<v-template>
-						<GridLayout columns="80, *, auto" rows="auto">
-							<Image :src="sound.pic" row="0" col="0" stretch="fill" @tap="onPlay(sound.url)" />
-							<Label :text="sound.title" row="0" col="1" @tap="onPlay(sound.url)"/>
+						<GridLayout columns="80, *, 110" rows="auto">
+							<Image :src="sound.pic" class="img-rounded" row="0" col="0" stretch="fill" @tap="onPlay(sound.url)" />
+							<Label :text="sound.title" class="m-l-5" row="0" col="1" @tap="onPlay(sound.url)"/>
 							<Button text="Supprimer" row="0" col="2" @tap="onDelete(sound.id)"/>
 						</GridLayout>
 					</v-template>
@@ -22,10 +22,10 @@
 			<TabViewItem title="Gj">
 				<ListView for="sound in sounds.filter(sound => sound.category == 0)">
 					<v-template>
-						<GridLayout columns="80, *, auto" rows="auto">
-							<Image :src="sound.pic" row="0" col="0" stretch="fill" @tap="onPlay(sound.url)" />
-							<Label :text="sound.title" row="0" col="1" @tap="onPlay(sound.url)"/>
-							<Button text="Supprimer" row="0" col="2" @tap="onDelete(sound.id)"/>
+						<GridLayout columns="80, *, 110" rows="auto">
+							<Image :src="sound.pic" class="img-rounded" row="0" col="0" stretch="fill" @tap="onPlay(sound.url)" />
+							<Label :text="sound.title" class="m-l-5" row="0" col="1" @tap="onPlay(sound.url)"/>
+							<Button text="Supprimer" class="p-x-5" row="0" col="2" @tap="onDelete(sound.id)"/>
 						</GridLayout>
 					</v-template>
 				</ListView>
@@ -33,9 +33,9 @@
 			<TabViewItem title="Noob">
 				<ListView for="sound in sounds.filter(sound => sound.category == 1)">
 					<v-template>
-						<GridLayout columns="80, *, auto" rows="auto">
-							<Image :src="sound.pic" row="0" col="0" stretch="fill" @tap="onPlay(sound.url)" />
-							<Label :text="sound.title" row="0" col="1" @tap="onPlay(sound.url)"/>
+						<GridLayout columns="80, *, 110" rows="auto">
+							<Image :src="sound.pic" class="img-rounded" row="0" col="0" stretch="fill" @tap="onPlay(sound.url)" />
+							<Label :text="sound.title" class="m-l-5" row="0" col="1" @tap="onPlay(sound.url)"/>
 							<Button text="Supprimer" row="0" col="2" @tap="onDelete(sound.id)"/>
 						</GridLayout>
 					</v-template>
@@ -44,9 +44,9 @@
 			<TabViewItem title="Tg">
 				<ListView for="sound in sounds.filter(sound => sound.category == 2)">
 					<v-template>
-						<GridLayout columns="80, *, auto" rows="auto">
-							<Image :src="sound.pic" row="0" col="0" stretch="fill" @tap="onPlay(sound.url)" />
-							<Label :text="sound.title" row="0" col="1" @tap="onPlay(sound.url)"/>
+						<GridLayout columns="80, *, 110" rows="auto">
+							<Image :src="sound.pic" class="img-rounded" row="0" col="0" stretch="fill" @tap="onPlay(sound.url)" />
+							<Label :text="sound.title" class="m-l-5" row="0" col="1" @tap="onPlay(sound.url)"/>
 							<Button text="Supprimer" row="0" col="2" @tap="onDelete(sound.id)"/>
 						</GridLayout>
 					</v-template>
@@ -55,9 +55,9 @@
 			<TabViewItem title="Wtf">
 				<ListView for="sound in sounds.filter(sound => sound.category == 3)">
 					<v-template>
-						<GridLayout columns="80, *, auto" rows="auto">
-							<Image :src="sound.pic" row="0" col="0" stretch="fill" @tap="onPlay(sound.url)" />
-							<Label :text="sound.title" row="0" col="1" @tap="onPlay(sound.url)"/>
+						<GridLayout columns="80, *, 110" rows="auto">
+							<Image :src="sound.pic" class="img-rounded" row="0" col="0" stretch="fill" @tap="onPlay(sound.url)" />
+							<Label :text="sound.title" class="m-l-5" row="0" col="1" @tap="onPlay(sound.url)"/>
 							<Button text="Supprimer" row="0" col="2" @tap="onDelete(sound.id)"/>
 						</GridLayout>
 					</v-template>
@@ -66,9 +66,9 @@
 			<TabViewItem title="Autres">
 				<ListView for="sound in sounds.filter(sound => sound.category == 4)">
 					<v-template>
-						<GridLayout columns="80, *, auto" rows="auto">
-							<Image :src="sound.pic" row="0" col="0" stretch="fill" @tap="onPlay(sound.url)" />
-							<Label :text="sound.title" row="0" col="1" @tap="onPlay(sound.url)"/>
+						<GridLayout columns="80, *, 110" rows="auto">
+							<Image :src="sound.pic" class="img-rounded" row="0" col="0" stretch="fill" @tap="onPlay(sound.url)" />
+							<Label :text="sound.title" class="m-l-5" row="0" col="1" @tap="onPlay(sound.url)"/>
 							<Button text="Supprimer" row="0" col="2" @tap="onDelete(sound.id)"/>
 						</GridLayout>
 					</v-template>
@@ -114,7 +114,7 @@ export default {
 	methods: {
     async onPlay(ytId) {
 			try {
-				const response = await axios.get(`https://enigmatic-headland-37663.herokuapp.com/sounds/${ytId}`);
+				const response = await axios.get(`http://url/sounds/${ytId}`);
 				const toast = Toast.makeText("Lecture");
 				toast.show();
 			} catch (err) {
