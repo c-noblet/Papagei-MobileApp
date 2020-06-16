@@ -13,10 +13,6 @@
         <Label text="Catégorie" class="label font-weight-bold" />
         <ListPicker :items="categoryList" v-model="form.category" />
       </StackLayout>
-      <StackLayout class="input-field">
-        <Label text="Favoris" class="label font-weight-bold m-b-5" />
-        <Switch v-model="form.favorite" />
-      </StackLayout>
       <GridLayout rows="auto, auto" columns="*, *">
         <Button text="Save" @tap="onSave(form)" class="btn btn-primary" row="0" col="0" />
         <Button text="Clear" @tap="onClear()" class="btn btn-primary" row="0" col="1" />
@@ -41,7 +37,6 @@ export default {
       form: {
         title: '',
         url: '',
-        favorite: false,
         category: 0
       }
     }
@@ -51,7 +46,6 @@ export default {
       this.form = {
         title: '',
         url: '',
-        favorite: false,
         category: 0
       }
     }
