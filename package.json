@@ -23,8 +23,7 @@
     "nativescript-toast": "^2.0.0",
     "nativescript-vue": "^2.6.1",
     "nativescript-vue-devtools": "^1.4.0",
-    "tns-core-modules": "^6.5.1",
-    "ytdl-core": "^2.1.7"
+    "tns-core-modules": "^6.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
