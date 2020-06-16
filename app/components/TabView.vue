@@ -47,17 +47,17 @@ export default {
 					alert(err);
 				}
 			}else{
-				alert('db not connnected');
+				alert('BD deconnecté');
 			}
 		} catch (err) {
-			alert('db init: '+err);
+			alert('Création de la BD'+err);
 		};
 	},
 	methods: {
     async onPlay(ytId) {
 			try {
 				const response = await axios.get('http://192.168.1.94:8000/sounds/'+ytId);
-				const toast = Toast.makeText("Playing");
+				const toast = Toast.makeText("Lecture");
 				toast.show();
 			} catch (err) {
 				alert(err.message);
@@ -67,7 +67,6 @@ export default {
     onDelete(id) {
 			this.db.execSQL('DELETE FROM Sounds WHERE id=?', [id])
 			.then(() => {
-				alert('deleted');
 				this.getSounds();
 			});
 		},
@@ -80,15 +79,15 @@ export default {
 			form.pic = `https://i.ytimg.com/vi/${form.url}/hqdefault.jpg`;
 			this.db.execSQL('INSERT INTO Sounds (json) VALUES (?)', [JSON.stringify(form)])
 			.then(id => {
-				alert('insert id: '+id);
 				this.getSounds();
+				const toast = Toast.makeText("Le son a été ajouté");
+				toast.show();
 			});
 		},
 		getSounds() {
 			this.db.all('SELECT * FROM Sounds').then(result => {
 				this.sounds = [];
 				for (let i = 0; i < result.length; i++) {
-					alert(result[i][1]);
 					this.sounds.push(JSON.parse(result[i][1]));
 					this.sounds[i].id = result[i][0];
 				}
