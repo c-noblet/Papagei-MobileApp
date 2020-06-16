@@ -7,8 +7,8 @@
 				<ListView for="sound in sounds">
 					<v-template>
 						<GridLayout columns="*, auto" rows="auto, auto">
-							<!--<Image :src="sound.pic" row="0" col="0" stretch="fill" @tap="onPlay(sound.id)" />-->
-							<Label :text="sound.title" row="0" col="0" @tap="onPlay(sound.id)"/>
+							<Image :src="sound.pic" row="0" col="0" stretch="fill" @tap="onPlay(sound.url)" />
+							<Label :text="sound.title" row="1" col="0" @tap="onPlay(sound.url)"/>
 							<Button text="Supprimer" row="0" col="1" @tap="onDelete(sound.id)"/>
 						</GridLayout>
 					</v-template>
@@ -22,6 +22,7 @@
 <script>
 import AddSound from './AddSound.vue';
 import axios from 'axios';
+import * as Toast from 'nativescript-toast';
 import Sqlite from 'nativescript-sqlite';
 export default {
 	data() {
@@ -53,14 +54,32 @@ export default {
 		};
 	},
 	methods: {
-    onplay(id) {
-      alert('test '+ id);
+    async onPlay(ytId) {
+			try {
+				const response = await axios.get('http://192.168.1.94:8000/sounds/'+ytId);
+				const toast = Toast.makeText("Playing");
+				toast.show();
+			} catch (err) {
+				alert(err.message);
+			}
+			
     },
     onDelete(id) {
-			alert('test '+ id);
+			this.db.execSQL('DELETE FROM Sounds WHERE id=?', [id])
+			.then(() => {
+				alert('deleted');
+				this.getSounds();
+			});
 		},
 		onSave(form) {
-			this.db.execSQL('INSERT INTO Sounds (json) VALUES (?)', [JSON.stringify(form)]).then(id => {
+			if(form.url.includes('?v=')){
+				form.url = form.url.split('?v=')[1];
+			}else if(form.url.includes('.be/')){
+				form.url = form.url.split('.be/')[1];
+			}
+			form.pic = `https://i.ytimg.com/vi/${form.url}/hqdefault.jpg`;
+			this.db.execSQL('INSERT INTO Sounds (json) VALUES (?)', [JSON.stringify(form)])
+			.then(id => {
 				alert('insert id: '+id);
 				this.getSounds();
 			});
@@ -69,6 +88,7 @@ export default {
 			this.db.all('SELECT * FROM Sounds').then(result => {
 				this.sounds = [];
 				for (let i = 0; i < result.length; i++) {
+					alert(result[i][1]);
 					this.sounds.push(JSON.parse(result[i][1]));
 					this.sounds[i].id = result[i][0];
 				}
