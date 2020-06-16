@@ -95,7 +95,6 @@ export default {
 				this.db = db;
 				try {
 					const ver = await this.db.version();
-					alert('sounds: '+ ver);
 					if (ver <= 1) {
 						this.db.execSQL('CREATE TABLE IF NOT EXISTS Sounds (id INTEGER PRIMARY KEY AUTOINCREMENT, json TEXT)');
 						this.db.version(ver + 1); // Sets the version to 1

@@ -37,7 +37,6 @@ export default {
 				this.db = db;
 				try {
           const ver = await this.db.version();
-          alert('settings: '+ ver);
 					if (ver <= 1) {
 						this.db.execSQL('CREATE TABLE IF NOT EXISTS Settings (id INTEGER PRIMARY KEY AUTOINCREMENT, json TEXT)');
 						this.db.execSQL('INSERT INTO Settings (json) VALUES (?)', [JSON.stringify({channeId: ''})])
