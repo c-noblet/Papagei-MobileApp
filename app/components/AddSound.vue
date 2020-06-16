@@ -28,11 +28,11 @@ export default {
   data() {
     return {
       categoryList: [
-        'Bien joué',
-        'T\'es nul',
-        'Ta geule',
-        'wtf',
-        'autres'
+        'Gj',
+        'Noob',
+        'Tg',
+        'Wtf',
+        'Autres'
       ],
       form: {
         title: '',

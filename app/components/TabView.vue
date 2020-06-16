@@ -1,21 +1,78 @@
 <template>
-  <TabView android:tabBackgroundColor="#53ba82"
+  <TabView 
+			@selectedIndexChange="getSounds()"
+			android:tabBackgroundColor="#53ba82"
 			android:tabTextColor="#c4ffdf"
 			android:selectedTabTextColor="#ffffff"
 			androidSelectedTabHighlightColor="#ffffff">
-			<TabViewItem title="All">
+			<TabViewItem title="[+]">
+				<add-sound :onSave="onSave" />
+			</TabViewItem>
+			<TabViewItem title="Tous">
 				<ListView for="sound in sounds">
 					<v-template>
-						<GridLayout columns="*, auto" rows="auto, auto">
+						<GridLayout columns="80, *, auto" rows="auto">
 							<Image :src="sound.pic" row="0" col="0" stretch="fill" @tap="onPlay(sound.url)" />
-							<Label :text="sound.title" row="1" col="0" @tap="onPlay(sound.url)"/>
-							<Button text="Supprimer" row="0" col="1" @tap="onDelete(sound.id)"/>
+							<Label :text="sound.title" row="0" col="1" @tap="onPlay(sound.url)"/>
+							<Button text="Supprimer" row="0" col="2" @tap="onDelete(sound.id)"/>
 						</GridLayout>
 					</v-template>
 				</ListView>
 			</TabViewItem>
-			<TabViewItem title="Add">
-				<add-sound :onSave="onSave" />
+			<TabViewItem title="Gj">
+				<ListView for="sound in sounds.filter(sound => sound.category == 0)">
+					<v-template>
+						<GridLayout columns="80, *, auto" rows="auto">
+							<Image :src="sound.pic" row="0" col="0" stretch="fill" @tap="onPlay(sound.url)" />
+							<Label :text="sound.title" row="0" col="1" @tap="onPlay(sound.url)"/>
+							<Button text="Supprimer" row="0" col="2" @tap="onDelete(sound.id)"/>
+						</GridLayout>
+					</v-template>
+				</ListView>
+			</TabViewItem>
+			<TabViewItem title="Noob">
+				<ListView for="sound in sounds.filter(sound => sound.category == 1)">
+					<v-template>
+						<GridLayout columns="80, *, auto" rows="auto">
+							<Image :src="sound.pic" row="0" col="0" stretch="fill" @tap="onPlay(sound.url)" />
+							<Label :text="sound.title" row="0" col="1" @tap="onPlay(sound.url)"/>
+							<Button text="Supprimer" row="0" col="2" @tap="onDelete(sound.id)"/>
+						</GridLayout>
+					</v-template>
+				</ListView>
+			</TabViewItem>
+			<TabViewItem title="Tg">
+				<ListView for="sound in sounds.filter(sound => sound.category == 2)">
+					<v-template>
+						<GridLayout columns="80, *, auto" rows="auto">
+							<Image :src="sound.pic" row="0" col="0" stretch="fill" @tap="onPlay(sound.url)" />
+							<Label :text="sound.title" row="0" col="1" @tap="onPlay(sound.url)"/>
+							<Button text="Supprimer" row="0" col="2" @tap="onDelete(sound.id)"/>
+						</GridLayout>
+					</v-template>
+				</ListView>
+			</TabViewItem>
+			<TabViewItem title="Wtf">
+				<ListView for="sound in sounds.filter(sound => sound.category == 3)">
+					<v-template>
+						<GridLayout columns="80, *, auto" rows="auto">
+							<Image :src="sound.pic" row="0" col="0" stretch="fill" @tap="onPlay(sound.url)" />
+							<Label :text="sound.title" row="0" col="1" @tap="onPlay(sound.url)"/>
+							<Button text="Supprimer" row="0" col="2" @tap="onDelete(sound.id)"/>
+						</GridLayout>
+					</v-template>
+				</ListView>
+			</TabViewItem>
+			<TabViewItem title="Autres">
+				<ListView for="sound in sounds.filter(sound => sound.category == 4)">
+					<v-template>
+						<GridLayout columns="80, *, auto" rows="auto">
+							<Image :src="sound.pic" row="0" col="0" stretch="fill" @tap="onPlay(sound.url)" />
+							<Label :text="sound.title" row="0" col="1" @tap="onPlay(sound.url)"/>
+							<Button text="Supprimer" row="0" col="2" @tap="onDelete(sound.id)"/>
+						</GridLayout>
+					</v-template>
+				</ListView>
 			</TabViewItem>
 		</TabView>
 </template>
@@ -38,11 +95,12 @@ export default {
 				this.db = db;
 				try {
 					const ver = await this.db.version();
-					if (ver === 0) {
+					alert('sounds: '+ ver);
+					if (ver <= 1) {
 						this.db.execSQL('CREATE TABLE IF NOT EXISTS Sounds (id INTEGER PRIMARY KEY AUTOINCREMENT, json TEXT)');
-						this.db.version(1); // Sets the version to 1
+						this.db.version(ver + 1); // Sets the version to 1
 					}
-					await this.getSounds();
+					this.getSounds();
 				} catch (err) {
 					alert(err);
 				}
@@ -50,7 +108,7 @@ export default {
 				alert('BD deconnecté');
 			}
 		} catch (err) {
-			alert('Création de la BD'+err);
+			alert('Création de la BD: '+err);
 		};
 	},
 	methods: {
@@ -62,7 +120,6 @@ export default {
 			} catch (err) {
 				alert(err.message);
 			}
-			
     },
     onDelete(id) {
 			this.db.execSQL('DELETE FROM Sounds WHERE id=?', [id])
