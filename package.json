@@ -19,6 +19,7 @@
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
+    "@nativescript/android": "7.0.0",
     "babel-loader": "^8.1.0",
     "nativescript-vue-template-compiler": "^2.6.0",
     "node-sass": "^4.13.1",
