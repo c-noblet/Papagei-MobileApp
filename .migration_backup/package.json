@@ -4,6 +4,16 @@
   "description": "A native application built with NativeScript-Vue",
   "author": "c-noblet <c.noblet.dev@gmail.com>",
   "license": "MIT",
+  "nativescript": {
+    "id": "io.papagei.app",
+    "templateVersion": "v2",
+    "tns-ios": {
+      "version": "6.5.0"
+    },
+    "tns-android": {
+      "version": "6.5.1"
+    }
+  },
   "dependencies": {
     "@nativescript/theme": "^2.2.1",
     "@vue/devtools": "^5.3.3",
@@ -13,16 +23,16 @@
     "nativescript-toast": "^2.0.0",
     "nativescript-vue": "^2.6.1",
     "nativescript-vue-devtools": "^1.4.0",
-    "@nativescript/core": "7.0.0",
-    "@nativescript/webpack": "3.0.0"
+    "tns-core-modules": "^6.5.5"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "babel-loader": "^8.1.0",
+    "nativescript-dev-webpack": "^1.5.1",
     "nativescript-vue-template-compiler": "^2.6.0",
+    "nativescript-worker-loader": "~0.11.0",
     "node-sass": "^4.13.1",
     "vue-loader": "^15.9.1"
-  },
-  "main": "main"
+  }
 }
